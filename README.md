@@ -23,12 +23,11 @@ Java 21, Spring Boot 4.2, Spring Security + JWT, Spring Data JPA with MySQL 8 (H
 
 ## Running locally
 
-1. Install MySQL 8 and create the app user once:
-   ```sql
-   CREATE USER 'streamhub'@'localhost' IDENTIFIED BY 'streamhub';
-   GRANT ALL PRIVILEGES ON streamhub.* TO 'streamhub'@'localhost';
+1. Start MySQL 8.4, Redis and Kafka with Docker Desktop (see `compose.yaml`):
+   ```powershell
+   docker compose up -d
    ```
-   The `streamhub` database itself is created on first start.
+   This creates the `streamhub` database and the `streamhub`/`streamhub` user. Data survives restarts; `docker compose down -v` wipes it.
 2. Run the app (the `dev` profile is the default):
    ```powershell
    .\mvnw.cmd spring-boot:run
