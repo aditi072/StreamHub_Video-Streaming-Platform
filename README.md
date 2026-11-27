@@ -19,15 +19,22 @@ A **modular monolith**: one Spring Boot application, split into feature packages
 
 ## Tech stack
 
-Java 21, Spring Boot 4.2, Spring Security + JWT, Spring Data JPA (MySQL, H2 for dev/tests), Kafka, Redis, AWS S3, springdoc (Swagger UI).
+Java 21, Spring Boot 4.2, Spring Security + JWT, Spring Data JPA with MySQL 8 (H2 only for automated tests), Kafka, Redis, AWS S3, springdoc (Swagger UI).
 
 ## Running locally
 
-```powershell
-.\mvnw.cmd spring-boot:run
-```
+1. Install MySQL 8 and create the app user once:
+   ```sql
+   CREATE USER 'streamhub'@'localhost' IDENTIFIED BY 'streamhub';
+   GRANT ALL PRIVILEGES ON streamhub.* TO 'streamhub'@'localhost';
+   ```
+   The `streamhub` database itself is created on first start.
+2. Run the app (the `dev` profile is the default):
+   ```powershell
+   .\mvnw.cmd spring-boot:run
+   ```
 
-The `dev` profile is the default and uses a local H2 database in `./data`. Use `SPRING_PROFILES_ACTIVE=prod` with `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` and `JWT_SECRET` set for a real MySQL setup.
+Override any connection setting with `DB_URL`, `DB_USERNAME` and `DB_PASSWORD`. In production use `SPRING_PROFILES_ACTIVE=prod`, which also requires `JWT_SECRET`.
 
 ## Branches
 
